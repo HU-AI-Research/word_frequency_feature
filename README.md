@@ -3,7 +3,9 @@
 2020.12.28 :
 
 After I finished the week6 assignment, I noticed the functions I made in fakenews_utilities.py can be done by sklearn.feature_extraction.text.CountVectorizer directly.
+
 Using Naïve Bayes, the model accuracy is 96.6%.
+
 
 
 
