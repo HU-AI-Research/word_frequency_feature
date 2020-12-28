@@ -1,6 +1,7 @@
 # word_frequency_feature
 
 2020.12.28 :
+
 After I finished the week6 assignment, I noticed the functions I made ih fakenews_utilities.py can be done by sklearn.feature_extraction.text.CountVectorizer directly.
 You can ignore the last word_frequency notebook, check the new one. ;)
 
@@ -8,9 +9,11 @@ Using Naïve Bayes, the model accuracy is 96.6%.
 
 
 
+
 ---------------------------------------------------------------------------------------------------
 
 2020.12.21 : 
+
 In fakenews_utilities.py, there are 4 functiones, which I imported to word_frequency notebook.
 
 1. def wash_pandas_str is to clean the tweets text.
