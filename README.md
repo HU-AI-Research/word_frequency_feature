@@ -1,5 +1,17 @@
 # word_frequency_feature
 
+2020.12.29 :
+
+I've upload a new version fakenewsutilities.py file for the functions. 
+
+You can check from word_frequency feature.ipynb that I've tried to use 500 high frequency words as feature, the predict accuracy is 88%
+
+
+
+
+
+---------------------------------------------------------------------------------------------------
+
 2020.12.28 :
 
 After I finished the week6 assignment, I noticed the functions I made in fakenews_utilities.py can be done by sklearn.feature_extraction.text.CountVectorizer directly.
