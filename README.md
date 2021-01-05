@@ -13,6 +13,8 @@ It's lower than the accuracy of high fequency 500 words, becacuse the two-words 
 
 
 
+---------------------------------------------------------------------------------------------------
+
 2020.12.29 :
 
 I've upload a new version fakenewsutilities.py file for the functions. 
