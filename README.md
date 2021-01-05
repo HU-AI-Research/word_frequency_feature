@@ -1,5 +1,18 @@
 # word_frequency_feature
 
+2021.01.05  : 
+
+
+I've update the fakenewsutilities.py file, add functions for generate bigram_fequency feature.
+
+You can check from bigram_fequency.ipynb that I've tried to use 500 high frequency two_words as feature, the predict accuracy is 80%.
+It's lower than the accuracy of high fequency 500 words, becacuse the two-words cover less posibility.
+
+
+
+
+
+
 2020.12.29 :
 
 I've upload a new version fakenewsutilities.py file for the functions. 
