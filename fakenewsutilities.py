@@ -19,14 +19,17 @@ punct_regex = re.compile('[%s]' % re.escape('!"#$%&\'()*+,./:;<=>?@[\\]^_`{|}~')
 def wash_pandas_str( input_df ):
     ret_text = input_df['text'].str.replace(r'…', '')
     ret_text = ret_text.str.replace(u'\u2019', '')
-
     ret_text = ret_text.str.replace(r'https\S*?\s', ' ')  
     ret_text = ret_text.str.replace(r'https\S*?$', '')
     ret_text = ret_text.str.replace(r'RT\s', '')
     ret_text = ret_text.str.replace(r'\s$', '')
-
     ret_text = ret_text.str.replace(r'@\S*?\s', '')
     ret_text = ret_text.str.replace(r'@\S*?$', '')
+    
+    ret_text = ret_text.str.replace('“', '')
+    ret_text = ret_text.str.replace('--', '')
+    ret_text = ret_text.str.replace('-', ' ')
+
 
     input_df['text'] = ret_text
     return input_df
@@ -144,9 +147,12 @@ def plot_word_map(input_word_df_full):
     fig.show()
  
 
-#make a function, train the data by using Naive Bayes    
-#To save testing time, I've set a default limit 500 words, it can also be changed to higher value to get higher accuracy. 
-def naive_bayes_train(X_train, Y_train, limit = 500):
+#make a function, train the data by using Naive Bayes.    
+#To save testing time, I've tried with limit in 500, 1000,1500,2000,2500 and 3000 high frequency words
+#By choosing 2000 high frequency words, we can save testing time while maintaining a high level of accuracy. 
+#If try higher value, we can get higher accuracy. I've tried with 10000 words, running time is 36mins, and get the accuracy at 0.96, very close to test with all words. 
+
+def naive_bayes_train(X_train, Y_train, limit = 2000):
     
     #count the true tweets and high tweets numbers.
     fake_cnt = len(Y_train[Y_train == 1].index)
@@ -245,8 +251,10 @@ def naive_bayes_generate_feature(train_df, fake_prob_prior,X_test,Y_test):
 
 
 #Bigram frequency
-#To save testing time, I've set a default limit 500 two_words, it can also be changed to higher value to get higher accuracy. 
-def naive_bayes_bigrm_train(X_train, Y_train, limit = 500):
+#To save testing time, I've tried with limit in 500, 1000,1500,2000,2500 and 3000 two_words
+#By choosing 2000 high frequency two_words, we can save testing time while maintaining a high level of accuracy. 
+#If try higher value, we can get higher accuracy.  
+def naive_bayes_bigrm_train(X_train, Y_train, limit = 2000):
     
     #count the true tweets and high tweets numbers.
     fake_cnt = len(Y_train[Y_train == 1].index)
