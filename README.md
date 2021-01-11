@@ -1,4 +1,16 @@
-# word_frequency_feature
+# word_frequency_feature/ bigram_frequency_feature
+
+2021.01.11  :
+
+ 
+I've tried testing with 500,1000,1500,2000,2500 and 3000 high frequency words and bigrams. 
+According to words_bigram_frequency.ipynb , you can find the running time difference and accuracy difference, I finally chosen 2000 words, 2000 bigrams as feature.
+
+
+
+
+
+
 
 2021.01.05  : 
 
