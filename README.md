@@ -7,6 +7,8 @@ I've tried testing with 500,1000,1500,2000,2500 and 3000 high frequency words an
 
 According to words_bigram_frequency.ipynb , you can find the running time difference and accuracy difference, I finally chosen 2000 words, 2000 bigrams as feature.
 
+the corr of word_freq_2000 is 0.870884,quite good, and much higher than corr of bigrm_freq_2000 0.796125.
+
 
 
 
