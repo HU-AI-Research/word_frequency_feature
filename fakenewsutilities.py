@@ -195,7 +195,7 @@ def naive_bayes_train(X_train, Y_train, limit = 2000):
     train_df['freq_fake'] = train_df['cnt_in_fake'] / fake_cnt
     train_df['total_cnt'] = train_df['cnt_in_true'] + train_df['cnt_in_fake']
 
-    #sort by the word occurrences number, get 500 words.
+    #sort by the word occurrences number, get 2000 words.
     train_df = train_df.sort_values(by = ['total_cnt'],ascending=False).iloc[0:limit,:]
 
     return train_df, fake_prob_prior
