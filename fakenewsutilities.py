@@ -74,8 +74,8 @@ def generate_word_df_from_label(input_frame, label = 1):
 
 
     
-#make a function,to get the most high frequency words in fake and true tweets    
-def generate_word_df_full(twit_df, fake_words_df, true_words_df, limit = 500):
+#make a function,to get the top 2000 high frequency words in fake and true tweets    
+def generate_word_df_full(twit_df, fake_words_df, true_words_df, limit = 2000):
     fake_df = twit_df[twit_df['label'] == 1]
     true_df = twit_df[twit_df['label'] == 0]
 
@@ -299,7 +299,7 @@ def naive_bayes_bigrm_train(X_train, Y_train, limit = 2000):
     train_df['freq_fake'] = train_df['cnt_in_fake'] / fake_cnt
     train_df['total_cnt'] = train_df['cnt_in_true'] + train_df['cnt_in_fake']
 
-    #sort by the word occurrences number, get 500 words.
+    #sort by the word occurrences number, get 2000 words.
     train_df = train_df.sort_values(by = ['total_cnt'],ascending=False).iloc[0:limit,:]
 
     return train_df, fake_prob_prior
