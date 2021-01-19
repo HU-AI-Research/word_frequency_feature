@@ -1,4 +1,17 @@
-# word_frequency_feature/ bigram_frequency_feature
+# word_frequency_feature/ bigram_frequency_feature/ bigram_tagging_feature
+
+2021.1.19 :
+
+Hey guys!
+
+I've update a bigram_tagging_feature to fakenewsutilities.py
+ 
+
+
+
+
+
+
 
 2021.01.11  :
 
