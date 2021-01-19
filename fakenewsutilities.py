@@ -136,6 +136,7 @@ def generate_word_df_full(twit_df, fake_words_df, true_words_df, limit = 2000):
     ret_df.columns = ['word', 'cnt_in_true', 'cnt_in_fake', 'freq_in_true', 'freq_in_fake', 'freq_diff', 'with_fake_prob', 'without_fake_prob']
     return ret_df
 
+
 #2.3 generate the high frequency words map
 #if use ipython --pylab in Visual Studio Code can get the high quality image for word frequency
 def plot_word_map(input_word_df_full):
@@ -207,7 +208,7 @@ def naive_bayes_train(X_train, Y_train, limit = 2000):
 
 
 #3.2 Use the train df from above function, generate the "words feature"  
-def naive_bayes_generate_feature(train_df, fake_prob_prior,X,Y):
+def naive_bayes_generate_feature(train_df, fake_prob_prior,X_input,Y_input):
  
     #the most frequently occurring words
     words_set = set(train_df['word'])
@@ -218,9 +219,9 @@ def naive_bayes_generate_feature(train_df, fake_prob_prior,X,Y):
 
     j = 0
 
-    for ind in X.index:
+    for ind in X_input.index:
 
-        twit_txt = punct_regex.sub('', X['text'][ind])
+        twit_txt = punct_regex.sub('', X_input['text'][ind])
         fake_prob = fake_prob_prior        #priori probability of fake tweet
         true_prob = 1 - fake_prob_prior    #priori probability of true tweet
 
@@ -242,7 +243,7 @@ def naive_bayes_generate_feature(train_df, fake_prob_prior,X,Y):
         pred = int(fake_prob > true_prob)
 
         #if the prediction is correct, count to accurate
-        accurate_count += (Y[ind] == pred)  
+        accurate_count += (Y_input[ind] == pred)  
 
         j += 1
         #as this function takes quite a few mins to completion, I add this print to show the process
@@ -250,6 +251,8 @@ def naive_bayes_generate_feature(train_df, fake_prob_prior,X,Y):
             print ('{0} tested, accuracy {1:3f}'.format( j, accurate_count/j) )
 
     return ret_list
+
+
 
 def conv_array(ret_list):
     x = np.array(ret_list)
@@ -311,7 +314,7 @@ def naive_bayes_bigrm_train(X_train, Y_train, limit = 2000):
 
 
 #4.2 Use the train df from above function, generate the "bigram feature" of train data
-def naive_bayes_generate_feature_bigrm(train_df_bigrm, fake_prob_prior,X,Y):
+def naive_bayes_generate_feature_bigrm(train_df_bigrm, fake_prob_prior,X_input,Y_input):
  
     #the most frequently occurring two_words
     words_set = set(train_df_bigrm['two_words'])
@@ -323,9 +326,9 @@ def naive_bayes_generate_feature_bigrm(train_df_bigrm, fake_prob_prior,X,Y):
 
     j = 0
 
-    for ind in X.index:
+    for ind in X_input.index:
 
-        tweet = punct_regex.sub('', X['text'][ind])
+        tweet = punct_regex.sub('', X_input['text'][ind])
         tweet = tweet.lower()  
         tokens = nltk.word_tokenize(tweet)
         bigrm = list(nltk.bigrams(tokens))
@@ -352,7 +355,7 @@ def naive_bayes_generate_feature_bigrm(train_df_bigrm, fake_prob_prior,X,Y):
         pred = int(fake_prob > true_prob)
 
         #if the prediction is correct, count to accurate
-        accurate_count += (Y[ind] == pred)  
+        accurate_count += (Y_input[ind] == pred)  
 
         j += 1
         #as this function takes quite a few mins to completion, I add this print to show the process
