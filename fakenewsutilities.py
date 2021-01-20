@@ -4,6 +4,7 @@ import nltk
 import re
 import string
 import matplotlib.pyplot as plt
+import matplotlib
 
 import pdb
 import seaborn as sns
@@ -328,3 +329,86 @@ def tags_bigram_generate_features(X_train):
 
     return ret_array        
   
+
+
+#6 functions for single tweet test:
+#function to clean the single tweet text.
+def clean_str( input_string ):
+    text = input_string.replace(r'…', '')
+    text = text.replace(u'\u2019', '')
+
+    text = text.replace(r'https\S*?\s', ' ')  
+    text = text.replace(r'https\S*?$', '')
+    text = text.replace(r'RT\s', '')
+    text = text.replace(r'\s$', '')
+
+    text = text.replace(r'@\S*?\s', '')
+    text = text.replace(r'@\S*?$', '')
+    text = text.replace('“', '')
+    text = text.replace('--', '')
+    text = text.replace('-', ' ')
+    text = punct_regex.sub('', text)
+    text = text.lower()
+
+    input_string = text
+    return input_string
+
+def generate_feature_1( input_string ):
+ 
+    fake_prob = fake_p_prior        #priori probability of fake tweet
+    true_prob = 1 - fake_p_prior    #priori probability of true tweet
+
+    for i in set(input_string.lower().split()):
+        if i in word_set:             
+             
+            true_prob_temp = true_prob * df_single_word[df_single_word['word'] == i].iloc[0,3]
+            fake_prob_temp = fake_prob * df_single_word[df_single_word['word'] == i].iloc[0,4]
+
+            #Since the probability values become smaller when multiplied together, I changed the format
+            true_prob = true_prob_temp / (fake_prob_temp + true_prob_temp)
+            fake_prob = fake_prob_temp / (fake_prob_temp + true_prob_temp)
+
+    return fake_prob
+
+def generate_feature_2( text ):
+
+    tokens = nltk.word_tokenize(text)
+    bigrm = list(nltk.bigrams(tokens))
+
+    fake_prob = fake_p_prior        #priori probability of fake tweet
+    true_prob = 1 - fake_p_prior    #priori probability of true tweet
+
+    for i in bigrm:
+        #pdb.set_trace()
+        if str(i) in bigrm_set:             
+             
+            true_prob_temp = true_prob * df_bigrm[df_bigrm['two_words'] == str(i)].iloc[0,3]
+            fake_prob_temp = fake_prob * df_bigrm[df_bigrm['two_words'] == str(i)].iloc[0,4]
+
+            #Since the probability values become smaller when multiplied together, I changed the format
+            true_prob = true_prob_temp / (fake_prob_temp + true_prob_temp)
+            fake_prob = fake_prob_temp / (fake_prob_temp + true_prob_temp)
+
+    return fake_prob
+
+def generate_feature_3(text):
+
+    ret_array = np.zeros((324))
+
+    #simple feature from bigrams of tags for SVM.
+
+    tokens = nltk.word_tokenize(text)
+    bigrm = list(nltk.bigrams(tokens))
+
+    for i in bigrm:
+        j = nltk.pos_tag([i[0], i[1]], tagset='universal')
+        tags_bigrm = tuple([j[0][1], j[1][1]])
+
+        if tags_bigrm in bi_tags_dict.keys(): #insurance only
+                #pdb.set_trace()
+            ret_array[bi_tags_dict[tags_bigrm] - 1] += 1
+
+
+    return ret_array
+
+
