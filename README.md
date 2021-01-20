@@ -1,8 +1,15 @@
 # word_frequency_feature/ bigram_frequency_feature/ bigram_tagging_feature
 
 
+2021.01.20 :
 
+From word_bigram_tagging_features.ipynb, you can check all my three features.
 
+2000 Word frequency feature score : 0.939
+
+2000 Bigram frequency feature score : 0.894
+
+Tagged bigram feature score : 0.933
 
 
 
